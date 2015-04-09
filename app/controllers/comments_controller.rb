@@ -24,11 +24,17 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @comment = Comment.new(comment_params)
+    # ibal. Se aniade esta linea para tener en cuenta el post al que pertenece el comment
+    @post = Post.find(params[:post_id])
+    # ibal. Se cambia esta linea para asociar el comment al post
+    #@comment = Comment.new(comment_params)
+    @comment = @post.comments.create(comment_params)
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
+        # ibal. Esta linea tambien se modifica, porque ahora vamos a ir siempre a traves de post
+        #format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
+        format.html { redirect_to @post, notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new }
