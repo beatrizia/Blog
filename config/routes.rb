@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  resources :comments
+  # ibal. Ya no se puede acceder a los comments mas que a traves del post
+  #resources :comments
 
   resources :posts do
      resources :comments
